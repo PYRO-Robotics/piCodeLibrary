@@ -1,4 +1,5 @@
 from subsys.py import *
+from motorSensors.py import *
 
 class motor(object):
 
@@ -6,6 +7,10 @@ class motor(object):
 		self.port = port
 		self.inverted = inverted
 		self.power = 0
+		self.powerLast = 0
+
+	def getLast(self):
+		return self.powerLast
 
 class dumbMotor(motor):
 
@@ -14,6 +19,7 @@ class dumbMotor(motor):
 		motor.__init__(self, port, inverted)
 
 	def getPower(self):
+		self.powerLast = self.power
 		self.power =  master.getPower()
 		return self.power
 
@@ -29,7 +35,7 @@ class smartMotor(motor):
 		self.position = sensor.getPosition()
 		return self.position
 
-	def resetPosition(self);
+	def resetPosition(self):
 		sensor.resetPosition()
 		self.position = 0
 
