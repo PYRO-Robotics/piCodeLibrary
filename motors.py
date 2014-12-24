@@ -5,12 +5,21 @@ class motor(object):
 
 	def __init__(self, port, inverted):
 		self.port = port
-		self.inverted = inverted
+		if inverted == 0:
+			self.inv = 1
+		else:
+			self.inv = -1
 		self.power = 0
 		self.powerLast = 0
 
-	def getLast(self):
+	def getLast(self): #Used to check if power output has changed
 		return self.powerLast
+
+	def getPort(self)
+		return self.port
+
+	def checkPower(self) #Used to check power without forcing an update
+		return self.power
 
 class dumbMotor(motor):
 
@@ -20,7 +29,7 @@ class dumbMotor(motor):
 
 	def getPower(self):
 		self.powerLast = self.power
-		self.power =  master.getPower()
+		self.power =  master.getPower() * self.inv
 		return self.power
 
 class smartMotor(motor):
